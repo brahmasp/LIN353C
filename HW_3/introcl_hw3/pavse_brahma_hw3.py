@@ -9,8 +9,7 @@ from nltk.corpus import brown;
 # Problem 1:
 
 def problem_1():
-	mystring = "-.12";
-
+	mystring = "-1.";
 	# (characers \. or \d etc)? - makes things inside optional
 	res = re.match("(\-)?\d+((\.\d+)|$)", mystring);
 	print (res);
@@ -20,9 +19,9 @@ def problem_1():
 # Problem 2:
 
 def problem_2():
-	mystring = "oeia";
+	mystring = "bcdfghjklmnpqoeia";
 	res = re.findall("[aeiouAEIOU]", mystring);
-	# print (len(res));
+	print (len(res));
 # problem_2();
 
 
@@ -59,7 +58,7 @@ def problem_3():
 	regexp_tagger.tag(brown_sents[3])
 	brown_tagged_sents = brown.tagged_sents(categories='news')
 	res = regexp_tagger.evaluate(brown_tagged_sents)
-	# print(res);
+	print(res);
 # problem_3();
 
 
@@ -163,10 +162,15 @@ Accuracy = 6 / 10 = 60%
 # Problem 6:
 
 '''
-I chose (C) because while the probablity of green cars is high, the witness
-has a high success rate of identify cars. So the probablities were
-not favoring any particular circumstance. More or less, they would
-be around the same given that the evidence was favoring blue.
+I chose (D) because I feel that  P(B/WB) and P(G/WB) will almost balance
+each other on account of high probability of seeing green and high probability
+of the witness to predict accurately.
+
+Intuitively, this feels like it should balance out eachother but definitely
+not be equal to eachother.
+
+So the proabilities will be reasonably close.
+
 
 Need to find
 
@@ -179,12 +183,19 @@ Based on the information, the witness guesses correctly 80%.
 So P(Witness pointing out Blue given it was correctly Blue) = 0.8
 P(WB / B) = 0.8
 
+P(WB / G) = 0.2
+
 By Bayes' rule
 
-P(B/WB) = (P(WB/B) P(B)) / (P(WB/B) * P(B) + P(WB/G) * P(G))
 
+P(B/WB) = (P(WB/B) P(B)) / (P(WB/B) * P(B) + P(WB/G) * P(G))
 = (0.8 * 0.15) / (0.8 * 0.15 + 0.2 * 0.85)
 = 0.41379
+
+
+P(G/WB) = (P(WB/G) * P(G)) / (P(WB/B) * P(B) + P(WB/G) * P(G))
+= (0.2 * 0.85) / (0.8 * 0.15 + 0.2 * 0.85)
+=0.5862
 '''
 
 

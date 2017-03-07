@@ -1,0 +1,99 @@
+# Name: Brahma S. Pavse
+# Ut EID: bsp686
+
+#########
+# Problem 1:
+
+While my choices may be wrong, i chose each based on the following reason:
+
+a) Since the action of asking questions resulted them to be in a specific state of little doubt, I thoght it would be #3
+
+b) Similarly, the departure (an action) resulted to be in a specific state. Hence I thought it would be #3
+
+c) Here the person wants to exit and since he/she specified "here" - the actual place of departure, I thought it would be #5.
+
+d) In contrast to above example, the leaving or departing did not involve specifying a location. It was just leaving in general, so I thought it was #1. (Based this off the examples wordnet online had)
+
+e) The result of sweeping the house was that the man was left with no means. Since something resulted or lead to this, I thought it was #7
+
+f) Since after the activity, there has to be amount remaining, I went with #11
+
+g) Since there was no trace (no remainder) I went #11
+
+h) Similarly, since he has no one left (or no one remaining), I went with #11. #12 didnt seem appropriate because he did not leave someone behind.
+
+i) Here, those several sequence of actions or events made Piepsam define himself in a specific state. Hence I went with #3
+
+j) Similary for a reason above. The audience is leaving the departing location was specified, so I went #5. (only way to distinguish between this and #1)
+
+Hardest to distinguish were:
+c, d and j.
+
+While it is obvious that they mean depart (I assume).
+The word sense #1 and #5 seem like synonyms and makes it
+almost impossible to decipher.
+
+The groups hardest to decipher between where:
+
+#1 and #5
+
+I marked something as #1 if the place that was being left was 
+not explicitly defined
+
+I marked something as #5 if the place was explicitly defined.
+
+#3, #7, #11 was hard as well.
+
+I marked something as #3 if a verb (or action) caused something
+to be in a specific state.
+
+I marked something as #7 if a noun caused something to end
+in a certain way
+
+I marked something as #11, using the remainder hint.
+
+
+#########
+# Problem 2:
+
+a)
+Total think cases: 12
+
+Total cases = 27
+
+P(THINK) = 12/27 = 0.444
+
+b) 
+
+Total experience cases = 15
+Let I be a feature, it appears 9 times in setences that are labelled as experience
+
+P(I | Experience) = 9/15 = 0.6
+
+c)
+
+For experience
+
+P(EXP) * P(I|EXP) * P(that|EXP) * P(there|EXP) * P(was|EXP) * P(a|EXP) * P(pain|EXP) * P(in|EXP) * P(my|EXP) * P(leg|EXP)
+
+= 
+0.555  * 0.6      * 0.066       * 0.066        * 0.066      * 0.33     * 0.2667      * 0.066     * 0.2667    * 0.066
+= 0.000000009788674
+
+For thinking
+
+=
+P(THINK) * 
+P(I|THINK) * P(that|THINK) * P(there|THINK) * P(was|THINK) * P(a|THINK) * P(pain|THINK) * P(in|THINK) * P(my|THINK) * P(leg|THINK)
+
+=
+0.444 * 0.25 * 0.583 * 0.0833 * 0.1667 * 0.0833 * 0.0833 * 0.0833 * 0.0833 * 0.0833
+
+= 0.000000003604103
+
+There is a higher chance that the word is under EXPERIENCE
+
+
+
+
+
