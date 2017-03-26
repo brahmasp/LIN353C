@@ -55,7 +55,7 @@ def problem_2():
 			word_to_pos[word] = set([pos]);
 
 	problem_2a(word_to_pos);
-	problem_2b(word_to_pos);
+	return problem_2b(word_to_pos);
 
 #########
 # Problem 2a:
@@ -74,7 +74,7 @@ def problem_2a(word_to_pos):
 def problem_2b(word_to_pos):
 
 	max_pos = -1;
-	max_list = [];
+	max_word_to_pos = {};
 
 	for word in word_to_pos:
 		if len(word_to_pos[word]) >= max_pos:
@@ -82,16 +82,41 @@ def problem_2b(word_to_pos):
 
 	for word in word_to_pos:
 		if len(word_to_pos[word]) == max_pos:
-			max_list.append(word);
+			max_word_to_pos[word] = word_to_pos[word];
 
-	print(str(max_list));
+	print(str(max_word_to_pos));
 
-problem_2();
+	return max_word_to_pos;
 
 #########
 # Problem 3:
 
+def problem_3(max_word_to_pos):
 
+	brown_sents = nltk.corpus.brown.tagged_sents(categories = "news")
+
+	sents = [];
+
+	for word in max_word_to_pos:
+
+		pos_list = max_word_to_pos[word]
+
+		for pos in pos_list:
+			word_pos_pair = (word, pos);
+
+			for sent in brown_sents:
+				if word_pos_pair in sent:
+					sents.append(sent);
+					break;
+	print(sents)
+
+
+def main():
+	problem_1();
+	max_word_to_pos = problem_2();
+	problem_3(max_word_to_pos);
+
+main();
 
 
 
