@@ -4,6 +4,7 @@
 import nltk;
 import operator;
 
+# Get data from brown_news
 brown_news = nltk.corpus.brown.tagged_words(categories = "news");
 #########
 # Problem 1:
@@ -15,9 +16,11 @@ def problem_1():
 
 	for word_pos in brown_news:
 
+		# Extract relevant word and its POS tagging
 		word = word_pos[0].lower();
 		pos = word_pos[1];
 
+		# If found increment it else, set count = 1
 		if word in word_counter:
 			word_counter[word] += 1;
 		else:
@@ -29,6 +32,7 @@ def problem_1():
 			pos_counter[pos] = 1;
 
 
+	# Sort in reverse order
 	word_counter_sorted = sorted(word_counter.items(), key = operator.itemgetter(1), reverse = True);
 
 	pos_counter_sorted = sorted(pos_counter.items(), key = operator.itemgetter(1), reverse = True);
@@ -48,10 +52,11 @@ def problem_2():
 		word = word_pos[0].lower();
 		pos = word_pos[1];
 
-		# Adding to list
+		# Adding POS to list
 		if word in word_to_pos:
 			word_to_pos[word].add(pos);
 		else:
+			# Set to get all unique POS
 			word_to_pos[word] = set([pos]);
 
 	problem_2a(word_to_pos);
@@ -66,7 +71,7 @@ def problem_2a(word_to_pos):
 		if len(word_to_pos[word]) >= 2:
 			counter += 1;
 
-	print(counter);
+	print("Words with more than 2 distinct POS: " + str(counter));
 
 #########
 # Problem 2b:
@@ -84,7 +89,7 @@ def problem_2b(word_to_pos):
 		if len(word_to_pos[word]) == max_pos:
 			max_word_to_pos[word] = word_to_pos[word];
 
-	print(str(max_word_to_pos));
+	print("Words with maximum distinct POS tagging " + str(max_word_to_pos));
 
 	return max_word_to_pos;
 
@@ -97,18 +102,28 @@ def problem_3(max_word_to_pos):
 
 	sents = [];
 
+	# Go through the words with max disinct POS tagging
 	for word in max_word_to_pos:
 
+		# To check if we have encountered a POS  before
 		pos_list = max_word_to_pos[word]
 
 		for pos in pos_list:
 			word_pos_pair = (word, pos);
+			pos_tracked = []; # List of pos that we have seen before
 
+			# For each sentence find the the pairs with this mapping and break
 			for sent in brown_sents:
-				if word_pos_pair in sent:
+				s = sent[0][0].lower();
+				if word_pos_pair[0] in s and word_pos_pair[1] not in pos_tracked: # If the pair is in a sentence.
 					sents.append(sent);
 					break;
-	print(sents)
+
+	print("Sentences for words with distinct POS tagging: ");
+	for s in sents:
+		print(s);
+
+	print ("Total sentences: (of all the words with max distinct POS taggings): " + str(len(sents)));
 
 
 def main():
