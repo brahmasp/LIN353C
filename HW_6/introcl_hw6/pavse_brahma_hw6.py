@@ -106,22 +106,23 @@ def problem_4(corpus):
 	P(I | <s>) = count(<s>, I) / count(<s>, --- )
 
 	'''
-	for word1, word2 in nltk.bigrams(words):
-		if word1 not in my_probs:
-			my_probs[word1] = {}
+	# Go through all word1 in count
+	for word1 in count:
 
-		# Got count (<s>, I);
-		pair_count = count[word1][word2]
-
-		# Need to get count (<s>, --)
 		total_count = 0;
 
-		# count[<s>] is a map, iteratre through it to and sum freq
-		# to get count (<s>, -)
-		for w in count[word1]:
-			total_count += count[word1][w];
+		# keep track of all counts for denominator
+		for word2 in count[word1]:
+			total_count += count[word1][word2];
 
-		my_probs[word1][word2] =  pair_count * 1.0 / total_count
+		if word1 not in my_probs:
+			my_probs[word1] = {};
+
+		# for each, numerator/denominator.
+		# numerator is the count for a specific pair (word1, word2)
+		for word2 in count[word1]:
+			pair_count = count[word1][word2];
+			my_probs[word1][word2] = pair_count * 1.0 / total_count;
 
 	# print(" ");
 	#prob = {'green': {'eggs': 1.0}, 'and': {'ham': 1.0}, 'am': {'Sam': 0.5, '</s>': 0.5}, 'like': {'green': 1.0}, 'eggs': {'and': 1.0}, 'Sam': {'I': 0.5, '</s>': 0.5}, 'not': {'like': 1.0}, 'ham': {'</s>': 1.0}, 'do': {'not': 1.0}, '<s>': {'Sam': 0.3333333333333333, 'I': 0.6666666666666666}, 'I': {'am': 0.6666666666666666, 'do': 0.3333333333333333}, '</s>': {'<s>': 1.0}}
@@ -211,17 +212,18 @@ def problem_5b():
 	alice_tok_temp = alice_string.split();
 	alice_tok = [];
 
-	# # removing punctuations
+	# option to remove punctuations
 	for ele in alice_tok_temp:
 		if ele not in punc:
 			alice_tok.append(ele);
 
 	# converting back to a string
-	alice_string = ' '.join(alice_tok)
-	#print (problem_4(alice_string));
+	# comment out below line to allow stripping of punc
+	#alice_string = ' '.join(alice_tok)
 
 	# Passing in result from problem 4 to solve random word problem
-	problem_5a(problem_4(alice_string));
+	prob_dict = problem_4(alice_string)
+	problem_5a(prob_dict);
 
 # problem_5b();
 
@@ -234,10 +236,10 @@ def main():
 	<s> I do not like green eggs and ham </s>
 	"""
 
-	print("Solving problem 4 and 5a at once");
+	#print("Solving problem 4 and 5a at once");
 	problem_5a(problem_4(problem_4_corpus));
 
-	print("Solving problem 5b");
+	#print("Solving problem 5b");
 	problem_5b();
 
 #main();
