@@ -114,10 +114,15 @@ def problem_3(max_word_to_pos):
 
 			# For each sentence find the the pairs with this mapping and break
 			for sent in brown_sents:
-				s = sent[0][0].lower();
-				if word_pos_pair[0] in s and word_pos_pair[1] not in pos_tracked: # If the pair is in a sentence.
-					sents.append(sent);
-					break;
+				for pair in sent:
+					word_in_sent = pair[0].lower();
+					pos_in_sent = pair[1];
+
+					# If the pairs match and we have not tried looking for this pos before
+					if word_pos_pair[0] == word_in_sent and word_pos_pair[1] == pos_in_sent and word_pos_pair[1] not in pos_tracked: # If the pair is in a sentence.
+						sents.append(sent);
+						pos_tracked.append(word_pos_pair[1]);
+						break; # Look at another sentence
 
 	print("Sentences for words with distinct POS tagging: ");
 	for s in sents:
@@ -131,7 +136,7 @@ def main():
 	max_word_to_pos = problem_2();
 	problem_3(max_word_to_pos);
 
-main();
+#main();
 
 
 
