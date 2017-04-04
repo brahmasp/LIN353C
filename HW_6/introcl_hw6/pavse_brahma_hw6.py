@@ -30,32 +30,23 @@ P(fire|is, on) = count (is, on, fire) / count (is, on)
 # Problem 3:
 
 '''
-(1) matches with (A) because
+A matches with (2)
 
-We are talking about the first sentence heard. The situation does describe
-or hint that "Do" is the first word heard, so the probablility cannot assume
-that it is the first thing heard.
+Both match because the situation described refers to just hearing
+certain sequence of words. Does not describe a situation that the
+sequence is the starting or ending sentence. Hence no, <s> and </s>
+Words could have existed before and after it.
 
-Similarly, the situation doesnt describe that think was the last thing heard,
-hence the probability doesnt include a sentence ending.
+B matches with (1)
+The situation describes that the sequence of words heard is a complete
+sentence. Given that this is true, it should have starting and
+ending tags. Hence inclusion of <s> and </s>
 
-
-(2) matches with B because 
-The situation describes the first three words heard, so we know that "Do" was
-the first word heard. Hence the probability should include the fact it was the
-starting word.
-
-Compared (3), (2) hints that the sentence ends. Hence need to include the 
-end of sentence in the probability
-
-(3) matches with C because
-The situation describes the first sentence heard is "Do you think", hence 
-we need to include the start of the sentence in the probability. But the 
-situation specifies that it starts with these words and nothing about the 
-end.
-
-So we cannot assume that this is the end of the sentence and hence we do 
-not include it in the proabability.
+C matches with (3)
+The situation described says the sentence is the starting sentence.
+Hence the use of <s>, but it also says it starts with that sentence
+with no mention of the end. Hence the exclusion of </s>. The 
+sentence may still be in the process of going on.
 
 '''
 
@@ -67,12 +58,6 @@ def problem_4(corpus):
 
 	count = {}
 	my_probs = {};
-
-	# corpus = """
-	# <s> I am Sam </s>
-	# <s> Sam I am </s>
-	# <s> I do not like green eggs and ham </s>
-	# """
 
 	words = corpus.split()
 
@@ -94,17 +79,8 @@ def problem_4(corpus):
 	    else:
 	        count[word1][word2] += 1
 
-	# This printout just demonstrates
-	# that the code does the right thing
-	# for word1 in count:
-	# 	for word2 in count[word1]:
-	# 		print(word1, word2, count[word1][word2])
-
-	# print(" ");
 	'''
-
 	P(I | <s>) = count(<s>, I) / count(<s>, --- )
-
 	'''
 	# Go through all word1 in count
 	for word1 in count:
@@ -124,29 +100,16 @@ def problem_4(corpus):
 			pair_count = count[word1][word2];
 			my_probs[word1][word2] = pair_count * 1.0 / total_count;
 
-	# print(" ");
-	#prob = {'green': {'eggs': 1.0}, 'and': {'ham': 1.0}, 'am': {'Sam': 0.5, '</s>': 0.5}, 'like': {'green': 1.0}, 'eggs': {'and': 1.0}, 'Sam': {'I': 0.5, '</s>': 0.5}, 'not': {'like': 1.0}, 'ham': {'</s>': 1.0}, 'do': {'not': 1.0}, '<s>': {'Sam': 0.3333333333333333, 'I': 0.6666666666666666}, 'I': {'am': 0.6666666666666666, 'do': 0.3333333333333333}, '</s>': {'<s>': 1.0}}
-	
-
-	# If true, matches the map provided in the hw by instructor
-	#print ("Found matches: " + str(my_probs == prob))
-
+	# Returns prob map of (word1, word2) corresponding to its chance
+	# of occuring based on MLE and corpus provided
 	return my_probs
-
-	# for word1 in probs:
-	# 	for word2 in probs[word1]:
-	# 		print(word1, word2, probs[word1][word2])
-
-# problem_4();
 
 
 #########
 # Problem 5a:
 
 def problem_5a(prob):
-
 	
-	# prob = {'<s>': {'one': 0.4, 'mice': 0.2, 'something': 0.2, 'else': 0.2}};
 	START_WORD = "<s>"
 
 	word = START_WORD;
@@ -187,16 +150,15 @@ def problem_5a(prob):
 
 		word_counter_sorted = sorted(temp_prob.items(), key = operator.itemgetter(1), reverse = False);
 
+		# Placed in ascending order, hence will guarantee that word is 
+		# chosen based on dart simulation
+		# break immediately once lowest condition is satisfied 
+		# otherwise all conditions hold true if allowed to proceed
 		for possible_word in word_counter_sorted:
-			#print (possible_word);
-			#print (p);
 			if p <= possible_word[1]:
-				word = possible_word[0];
+				word = possible_word[0]; # reassign the word, to base next iteration on
 				break;
 		print(word);
-
-# problem_5a();
-
 
 ###########
 # Problem 5b:
@@ -219,14 +181,11 @@ def problem_5b():
 
 	# converting back to a string
 	# comment out below line to allow stripping of punc
-	#alice_string = ' '.join(alice_tok)
+	# alice_string = ' '.join(alice_tok)
 
 	# Passing in result from problem 4 to solve random word problem
 	prob_dict = problem_4(alice_string)
 	problem_5a(prob_dict);
-
-# problem_5b();
-
 
 def main():
 
