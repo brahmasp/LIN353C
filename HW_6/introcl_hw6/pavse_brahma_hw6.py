@@ -4,7 +4,7 @@ import math
 import operator
 import string
 
-#### Homework 5
+#### Homework 6
 # Name: Brahma S. Pavse
 # EID: bsp686
 
@@ -88,6 +88,7 @@ def problem_4(corpus):
 		total_count = 0;
 
 		# keep track of all counts for denominator
+		# Calculating count(word1, --)
 		for word2 in count[word1]:
 			total_count += count[word1][word2];
 
@@ -100,7 +101,7 @@ def problem_4(corpus):
 			pair_count = count[word1][word2];
 			my_probs[word1][word2] = pair_count * 1.0 / total_count;
 
-	# Returns prob map of (word1, word2) corresponding to its chance
+	# Returns prob map of count(word1, word2)/count(word1, -) corresponding to its chance
 	# of occuring based on MLE and corpus provided
 	return my_probs
 
@@ -111,28 +112,18 @@ def problem_4(corpus):
 def problem_5a(prob):
 	
 	START_WORD = "<s>"
-
 	word = START_WORD;
 	print(word);
 	for x in range (1, 51):
 		p = random.random();
 
-		# probs[word] gives dictionary with corresponding words and the
-		# probability of the combinations
-
-		# Want to pick word that has closest probability to the p
-
-		# then print  word corresponding to that probability 
-		# and repeat process 50 times	
-
-		# Put probs[word] in ascending order of probabilities
-		# searc through this until first value that p is greater than and
-		# break
-
-
+		# Get sorted order of probabilities from word1 to ---
 		word_counter_sorted = sorted(prob[word].items(), key = operator.itemgetter(1), reverse = True);
 		temp_prob = dict(word_counter_sorted);
+
+		# max_word corresponds to word2 such that [word1][word2] is max
 		max_word = word_counter_sorted[0][0];
+		# gets the max value prob - [word1][word2]
 		max_prob = word_counter_sorted[0][1];
 		change = max_prob;
 
@@ -144,16 +135,28 @@ def problem_5a(prob):
 		# that is the answer
 		for other_words in word_counter_sorted:
 
+			# Skipping over first word, could have also made change = 0 if I did not want to skip it.
 			if other_words[0] != max_word:
+				
+				# With respect to the example, 0.4 remains the same, 0.2 becomes 0.6, 0.2 because 0.8 and 0.8 becomes 1.0
+				# Hence intervals of (0.4, 0.6, 0.8, 1.0) - similar to the box in the handout.
 				temp_prob[other_words[0]] += change;
-				change = temp_prob[other_words[0]] ;
+				change = temp_prob[other_words[0]];
 
+		# sort this new dictionary just be safe.
 		word_counter_sorted = sorted(temp_prob.items(), key = operator.itemgetter(1), reverse = False);
 
 		# Placed in ascending order, hence will guarantee that word is 
 		# chosen based on dart simulation
 		# break immediately once lowest condition is satisfied 
 		# otherwise all conditions hold true if allowed to proceed
+
+		# If prob is 0.7,
+		# Then 0.7 is not less than 0.4
+		# 0.7 is not less than 0.6,
+		# 0.7 is less than 0.8.
+		# So 0.7 corresponds to the 3rd category as described in the handout.
+		# Break immedaiately after finding the word match
 		for possible_word in word_counter_sorted:
 			if p <= possible_word[1]:
 				word = possible_word[0]; # reassign the word, to base next iteration on
@@ -168,20 +171,22 @@ def problem_5b():
 	file = open("alicecorpus.txt");
 
 	alice_string = file.read();
+	punc = set(string.punctuation);
 
-	punc = set(string.punctuation)
+	remove_punc = False;
 
 	alice_tok_temp = alice_string.split();
 	alice_tok = [];
 
-	# option to remove punctuations
-	for ele in alice_tok_temp:
-		if ele not in punc:
-			alice_tok.append(ele);
+	if remove_punc:
+		# option to remove punctuations
+		for ele in alice_tok_temp:
+			if ele not in punc:
+				alice_tok.append(ele);
 
-	# converting back to a string
-	# comment out below line to allow stripping of punc
-	# alice_string = ' '.join(alice_tok)
+		# converting back to a string
+		# comment out below line to allow stripping of punc
+		alice_string = ' '.join(alice_tok)
 
 	# Passing in result from problem 4 to solve random word problem
 	prob_dict = problem_4(alice_string)
