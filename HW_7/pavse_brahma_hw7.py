@@ -108,7 +108,19 @@ Sequence DT JJ NN NN and "the complex houses students"
 
 v4(NN) = v(NN) * P(NN|NN) * P(students|NN)
 	= 3.11593536e-09 * 0.1 * 0.0009
-	= 2.7E-13
+	= 2.7E-13 (max)
+
+Sequence DT NN NN NN corresponding word "the complex houses students"
+
+v4(NN) = v(NN) * v(NN|NN) * v(students|NN)
+	= 1.614e-10 * 0.1 * 0.0009
+	= 1.4526e-14
+
+Sequence DT JJ VB NN corresponding word "the complex houses students"
+
+v4(NN) = v(VB) * v(NN|VB) * v(students|NN)
+	= 4.8687e-12 * 0.11 * 0.0009
+	= 4.820013e-16
 
 
 Sequence DT NN VB NN and "the complex houses sutdents"
