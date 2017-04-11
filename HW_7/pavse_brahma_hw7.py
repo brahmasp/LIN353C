@@ -36,10 +36,11 @@ Reading 1: Delta airline failure
 
 Reading 2: Delta company melted down
 
-Delta/NNP meltdown/NN
+Tagging: Delta/NNP meltdown/NN
 
 No the POS does not necessarily clear it up. We stll do not know if Delta 
-literally melted down or if they suffered a catastrophic situation.
+literally melted down or if they suffered a catastrophic situation (well it is
+but catastrophic situation could mean financially as well).
 
 '''
 
